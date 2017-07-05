@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Data Table Test</title>
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+		integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+		crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+<script>
+	$(document).ready(function() {
+	    var table = $('#mytable').DataTable({
+			ajax: {
+				"url": "ReturnJSONStub",
+				"dataSrc": ""
+			},
+			columns:[
+	            { "data": "name" },
+	            { "data": "number" },
+	            { "data": "test" }
+	         ],
+	         dom: "lrtip"
+	    });
+	    $('#mytable tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+	    } );
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
+	    $('#mytable tfoot tr').appendTo('#mytable thead');
+	});
+</script>
+</head>
+<body>
+	<table id="mytable" class="stripe hover">
+		<thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Test</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Test</th>
+            </tr>
+        </tfoot>
+	</table>
+</body>
+</html>
