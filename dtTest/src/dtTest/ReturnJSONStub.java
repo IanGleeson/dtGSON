@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//Uses GSON to de/serialize data
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 /**
  * Servlet implementation class ReturnJSONStub
  */
@@ -36,12 +34,13 @@ public class ReturnJSONStub extends HttpServlet {
 		//sets response type to JSON
 		response.setContentType("application/json");
 		
-		//uses a List of Maps for key:value pairs
-		List<Map> data = new ArrayList<>();
+		//uses a List of HashMaps for key:value pairs
+		List<Map<String, String>> data = new ArrayList<>();
 		Map<String, String> map = new HashMap<String, String>();
 		
 		//replace below loop with your ResultSet
 		for(int i=0;i<3;i++){
+			map.clear();
 			map.put("name", "Ian");
 			map.put("test", "test1");
 			map.put("number", "1");
@@ -65,7 +64,7 @@ public class ReturnJSONStub extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	protected String getJSON(List<Map> data){
+	protected String getJSON(List<Map<String, String>> data){
 		Gson gson = new Gson();
 		String json = gson.toJson(data);
 		
